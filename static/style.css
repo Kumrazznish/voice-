@@ -20,6 +20,11 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.container:hover {
+  transform: scale(1.01);
 }
 
 header {
@@ -37,9 +42,10 @@ header {
   padding: 20px;
   background: #fff;
   position: relative;
+  transition: background 0.5s ease;
 }
 
-/*  Custom scrollbar */
+/* Custom scrollbar */
 .chat-container::-webkit-scrollbar {
   width: 6px;
 }
@@ -69,6 +75,16 @@ header {
   color: #202124;
   align-self: flex-start;
   margin-right: auto;
+  transform: translateX(-20px);
+  opacity: 0;
+  animation: slideIn 0.5s forwards ease-out;
+}
+
+@keyframes slideIn {
+  to {
+      transform: translateX(0);
+      opacity: 1;
+  }
 }
 
 .input-area {
@@ -78,12 +94,27 @@ header {
   padding: 15px;
   background: #fff;
   border-top: 1px solid #dadce0;
-  gap: 20px;
+  gap: 10px;
 }
 
-#voice-btn, #text-mode-btn {
-  width: 48px;
-  height: 48px;
+#text-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #dadce0;
+  border-radius: 20px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#text-input:focus {
+  border-color: #4285f4;
+  box-shadow: 0 0 5px rgba(66, 133, 244, 0.3);
+}
+
+#send-btn {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: none;
   background: #4285f4;
@@ -95,12 +126,44 @@ header {
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-#voice-btn:hover, #text-mode-btn:hover {
+#send-btn:hover {
   background: #3267d6;
   transform: scale(1.1);
 }
 
-#voice-btn i, #text-mode-btn i {
+#voice-btn, #mode-toggle-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: #4285f4;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 3D effect on mic button */
+#voice-btn:active {
+  transform: scale(0.95) rotate(5deg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: #34a853;
+}
+
+#voice-btn.listening {
+  background: #34a853;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+#voice-btn:hover, #mode-toggle-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+#voice-btn i, #mode-toggle-btn i, #send-btn i {
   font-size: 20px;
 }
 
@@ -139,11 +202,26 @@ header {
   }
 }
 
+@keyframes pulse {
+  0% {
+      transform: scale(1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+      transform: scale(1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
 .hidden {
   display: none;
 }
 
 /* Animations for messages */
 .chat-message {
-  animation-duration: 0.3s;
+  animation-duration: 0.5s;
 }
